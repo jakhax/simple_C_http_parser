@@ -1,5 +1,5 @@
 #include "http_parse_url.h"
-#include "http_parser/http_parser.h"
+#include "http_parser.h"
 
 static struct http_parser_url* h_parse_url;
 

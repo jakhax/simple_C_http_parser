@@ -1023,8 +1023,8 @@ reexecute:
 
                     switch (parser->method << 16 | parser->index << 8 | ch) {
 #define XX(meth, pos, ch, new_meth) \
-    case (HTTP_##meth << 16 | pos << 8 | ch): \
-      parser->method = HTTP_##new_meth; break;
+case (HTTP_##meth << 16 | pos << 8 | ch): \
+  parser->method = HTTP_##new_meth; break;
 
                             XX(POST,      1, 'U', PUT)
                             XX(POST,      1, 'A', PATCH)

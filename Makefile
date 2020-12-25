@@ -1,14 +1,15 @@
-CC = gcc
 
-all: 
-	$(CC) main.c\
-		./log/log.c\
-		./http_parser/http_parser.c\
-		./src/http_parse_url.c\
-		-I .\
-		-I ./include\
-		-I ./log\
-		-I ./http_parser\
-		-o app
+.PHONY: all examples  no_test  tests
 
+all: examples tests
+	$(MAKE) post_build
 
+no_test: examples
+
+all: examples
+	
+tests: 
+	$(MAKE) -C TESTS
+
+examples: 
+	$(MAKE) -C examples

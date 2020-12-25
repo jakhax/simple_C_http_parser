@@ -1,4 +1,4 @@
-#ifndef _HTTPS_CLIENT_PARSED_URL_H__
+#ifndef _C_HTTPS_CLIENT_PARSED_URL_H__
 #define _HTTPS_CLIENT_PARSED_URL_H__
 
 #include "common.h"
