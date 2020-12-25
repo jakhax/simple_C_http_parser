@@ -5,8 +5,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-
-#include "log/log.h"
+#include "log.h"
 
 #define LOG_LEVEL LOG_TRACE
 
