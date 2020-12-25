@@ -1,5 +1,6 @@
 #include "common.h"
 #include <ctype.h>
+#include "http_parser.h"
 #include "http_response.h"
 
 static int strcicmp(char const* a, char const* b);
@@ -23,6 +24,8 @@ int http_response_init(http_response_t* r) {
     r->body = NULL;
     r->status_message = NULL;
     r->url = NULL;
+    r->header_values = (char**)malloc(sizeof(char[100]));
+    r->header_fields = (char**)malloc(sizeof(char[100]));
 
     return HTTPS_CLIENT_OK;
 }
@@ -47,7 +50,7 @@ void http_response_free(http_response_t* r) {
             free(r->header_fields[ix]);
         }
         if (r->header_values[ix]) {
-            free(r->header_fields[ix]);
+            free(r->header_values[ix]);
         }
     }
 }
@@ -68,11 +71,14 @@ int http_response_set_status(http_response_t* r, int a_status_code, char* a_stat
 
 int http_response_set_url(http_response_t* r, const char* url, size_t len) {
 
-    r->url = (char*)malloc(len);
+    r->url = (char*)malloc(len + 1);
 
     if (!r->url) {
         return HTTPS_CLIENT_NO_MEMORY;
     }
+
+    memcpy(r->url, url, len);
+    r->url[len] = '\0';
 
     return HTTPS_CLIENT_OK;
 }
@@ -128,7 +134,7 @@ int http_response_set_header_field(http_response_t* r, const char* field, size_t
         char* prev =  r->header_fields[count];
         size_t prev_size = strlen(r->header_fields[count]);
         r->header_fields[count] = (char*)realloc((char*)r->header_fields[count], prev_size + field_len + 1);
-        if (r->header_fields[count]) {
+        if (!r->header_fields[count]) {
             free(prev);
             log_error("unable to realloc header field");
             return HTTPS_CLIENT_NO_MEMORY;
@@ -141,9 +147,8 @@ int http_response_set_header_field(http_response_t* r, const char* field, size_t
             log_error("max headers count reached");
             return HTTPS_CLIENT_NO_MEMORY;
         }
-
         r->header_fields[count] = (char*)malloc(field_len + 1);
-        if (r->header_fields[count]) {
+        if (!r->header_fields[count]) {
             log_error("unable to allocate header field");
             return HTTPS_CLIENT_NO_MEMORY;
         }
@@ -165,7 +170,7 @@ int http_response_set_header_value(http_response_t* r, const char* value,  size_
 
     // headers can be chunked
     if (r->concat_header_value) {
-        if (!r->header_values[count]) {
+        if (!r->header_values[count - 1]) {
             log_error("cant concat value to null!");
             return HTTPS_CLIENT_INVALID_PARAMETER;
         }
@@ -173,7 +178,7 @@ int http_response_set_header_value(http_response_t* r, const char* value,  size_
         char* prev =  r->header_values[count - 1];
         size_t prev_size = strlen(r->header_values[count - 1]);
         r->header_values[count - 1] = (char*)realloc(r->header_values[count - 1], value_len + 1);
-        if (r->header_values[count - 1]) {
+        if (!r->header_values[count - 1]) {
             free(prev);
             log_error("unable to realloc header value");
             return HTTPS_CLIENT_NO_MEMORY;
@@ -189,7 +194,8 @@ int http_response_set_header_value(http_response_t* r, const char* value,  size_
         }
 
         r->header_values[count] = (char*)malloc(value_len + 1);
-        if (r->header_values[count]) {
+
+        if (!r->header_values[count]) {
             log_error("unable to allocate header value");
             return HTTPS_CLIENT_NO_MEMORY;
         }

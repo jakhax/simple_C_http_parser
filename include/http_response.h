@@ -12,8 +12,8 @@ typedef struct http_response {
     char* url;
     int method;
 
-    char* header_fields[MAX_HEADERS_COUNT];
-    char* header_values[MAX_HEADERS_COUNT];
+    char** header_fields;
+    char** header_values;
     uint16_t headers_count;
 
     bool concat_header_field;
