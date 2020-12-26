@@ -237,10 +237,10 @@ void http_response_set_message_complete(http_response_t* r) {
     r->is_message_completed = true;
 }
 
-int http_response_find_header(http_response_t* r, const char* key){
-    if(r->headers_count){
-        for(uint16_t i = 0; i < r->headers_count; i++){
-            if(strcicmp(r->header_fields[i], key) == 0){
+int http_response_find_header(http_response_t* r, const char* key) {
+    if (r->headers_count) {
+        for (uint16_t i = 0; i < r->headers_count; i++) {
+            if (strcicmp(r->header_fields[i], key) == 0) {
                 return (int)i;
             }
         }

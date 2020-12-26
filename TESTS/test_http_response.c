@@ -280,21 +280,21 @@ int test_find_header(void) {
     }
 
     int k = http_response_find_header(&res, "content-type");
-    if (k != 0){
+    if (k != 0) {
         error("find_header<content-type>: got %d expected %d", k, 0);
         ret = -1;
         goto exit;
     }
 
     k = http_response_find_header(&res, "Transfer-encoding");
-    if (k != 2){
+    if (k != 2) {
         error("find_header<transfer-encoding>: got %d expected %d", k, 2);
         ret = -1;
         goto exit;
     }
 
     k = http_response_find_header(&res, "Invalid-header");
-    if (k != -1){
+    if (k != -1) {
         error("find_header<Invalid-header>: got %d expected %d", k, -1);
         ret = -1;
         goto exit;

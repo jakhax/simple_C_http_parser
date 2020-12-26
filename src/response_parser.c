@@ -8,7 +8,7 @@
 #if DEBUG_CALLBACKS
 #define dbg_cb(x, ...) printf("[PARSER][CB] " x "\r\n", ##__VA_ARGS__)
 #else
-#define dbg_cb(x, ...) 
+#define dbg_cb(x, ...)
 #endif
 
 static int rp_on_message_begin_callback(http_parser* parser) {
