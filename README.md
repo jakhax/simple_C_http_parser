@@ -13,4 +13,8 @@ make tests
 make examples
 ```
 
-you can find the built binaries in [examples](./examples)
+you can find the built binaries in [examples](./examples) folder.
+
+## Todo
+
+- [-] Add error code and error messages to struct fields
