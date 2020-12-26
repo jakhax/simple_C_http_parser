@@ -406,7 +406,5 @@ int main() {
     tests[9] = test_set_body;
     tests[10] = test_set_body_chunked;
 
-    run_tests((const char*)TEST_NAME, tests, tests_count);
-
-    return 0;
+    return run_tests((const char*)TEST_NAME, tests, tests_count);
 }

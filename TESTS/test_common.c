@@ -1,6 +1,6 @@
 #include "test_common.h"
 
-void run_tests(const char* test_name, int (*tests[])(void), int tests_count) {
+int run_tests(const char* test_name, int (*tests[])(void), int tests_count) {
 
     printf("\r\n\r\n+++++ %s UNIT TESTS +++++\r\n", test_name);
     int passes = 0;
@@ -16,5 +16,7 @@ void run_tests(const char* test_name, int (*tests[])(void), int tests_count) {
     printf("%d PASS %d FAIL\r\n", passes, tests_count - passes);
 
     printf("----- %s UNIT TESTS ----\r\n\r\n", test_name);
+
+    return tests_count - passes;
 
 }

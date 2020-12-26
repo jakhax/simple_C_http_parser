@@ -109,7 +109,5 @@ int main() {
     tests[1] = test_get_host;
     tests[2] = test_get_schema;
 
-    run_tests((const char*)TEST_NAME, tests, tests_count);
-
-    return 0;
+    return run_tests((const char*)TEST_NAME, tests, tests_count);
 }

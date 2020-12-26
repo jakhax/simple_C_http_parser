@@ -11,6 +11,17 @@ PARSE_URL_TEST=http_parse_url
 HTTP_RESPONSE_TEST=http_response
 REQUEST_BUILDER_TEST=request_builder
 
+TESTS = $(PARSE_URL_TEST)\
+		$(HTTP_RESPONSE_TEST)\
+		$(REQUEST_BUILDER_TEST)
+
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+
+
 all: tests
 
 $(PARSE_URL_TEST): 
@@ -38,12 +49,15 @@ $(REQUEST_BUILDER_TEST):
 		-I ../http_parser\
 		-o $(REQUEST_BUILDER_TEST).o
 
-tests: $(PARSE_URL_TEST) $(HTTP_RESPONSE_TEST) $(REQUEST_BUILDER_TEST)
-	./$(PARSE_URL_TEST).o
-	./$(HTTP_RESPONSE_TEST).o
-	./$(REQUEST_BUILDER_TEST).o
-
-
-
-
-
+tests: $(TESTS)
+	for p in $(TESTS); do              \
+		./$$p.o ; \
+		if [ $$? -eq 0 ] ; \
+		then \
+			echo $(GREEN) $$p All Tests Passed!$(NC); \
+		else \
+			echo $(RED) $$p $$? Tests Failed!$(NC);  \
+			exit 1 ; \
+		fi \
+	done 
+	exit 0 ;

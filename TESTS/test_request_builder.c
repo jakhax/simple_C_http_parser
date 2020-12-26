@@ -247,7 +247,5 @@ int main() {
     tests[3] = test_set_parsed_url;
     tests[4] = test_build;
 
-    run_tests((const char*)TEST_NAME, tests, tests_count);
-
-    return 0;
+    return run_tests((const char*)TEST_NAME, tests, tests_count);
 }
