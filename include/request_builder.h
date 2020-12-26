@@ -7,7 +7,7 @@
 
 #define DEBUG_REQUEST 1
 
-typedef struct request_builder{
+typedef struct request_builder {
     int method;
     parse_url_t* parsed_url;
     char* header_values[MAX_HEADERS_COUNT];
@@ -39,7 +39,7 @@ void request_builder_set_method(request_builder_t* request_builder, int method);
  * adds Host header
  * @return 0 on success < 0 on error
  */
-int request_builder_set_parsed_url(request_builder_t* rb,  int method, parse_url_t* parsed_url);
+int request_builder_set_parsed_url(request_builder_t* rb, parse_url_t* parsed_url);
 
 /**
  * @brief set header
@@ -59,6 +59,6 @@ bool request_builder_has_header(request_builder_t* rb, const char* key, const ch
  * @brief creates a http request buffer from request_builder_t
  */
 char* request_builder_build(request_builder_t* rb, const void* body, uint32_t body_size, uint32_t* size, bool skip_content_length);
-    
+
 
 #endif
