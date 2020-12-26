@@ -47,26 +47,5 @@ void response_parser_finish(response_parser_t* rp);
  */
 int response_parser_get_err(response_parser_t* rp);
 
-int rp_on_message_begin_callback(http_parser* parser);
-
-int rp_on_url_callback(http_parser* parser, const char* at, uint32_t length);
-
-int rp_on_status_callback(http_parser* parser, const char* at, uint32_t length);
-
-int rp_on_header_field_callback(http_parser* parser, const char* at, uint32_t length);
-
-int rp_on_header_value_callback(http_parser* parser, const char* at, uint32_t length);
-
-int rp_on_headers_complete_callback(http_parser* parser);
-
-int rp_on_body_callback(http_parser* parser, const char* at, uint32_t length);
-
-int rp_on_message_complete_callback(http_parser* parser);
-
-int rp_on_chunk_header_callback(http_parser* parser);
-
-int rp_on_chunk_complete_callback(http_parser* parser);
-
-
 
 #endif // _HTTP_RESPONSE_PARSER_H_

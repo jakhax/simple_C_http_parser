@@ -18,3 +18,5 @@ you can find the built binaries in [examples](./examples) folder.
 ## Todo
 
 - [-] Add error code and error messages to struct fields
+- [-] logging, with threading support
+- [-] support for very low memory devices
