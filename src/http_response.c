@@ -1,9 +1,7 @@
 #include "common.h"
-#include <ctype.h>
 #include "http_parser.h"
 #include "http_response.h"
 
-static int strcicmp(char const* a, char const* b);
 
 int http_response_init(http_response_t* r) {
     if (!r) {
@@ -65,7 +63,6 @@ int http_response_set_status(http_response_t* r, int a_status_code, char* a_stat
 
     memcpy(r->status_message, a_status_message, len);
     r->status_message[len] = '\0';
-
     return HTTPS_CLIENT_OK;
 }
 
@@ -240,13 +237,14 @@ void http_response_set_message_complete(http_response_t* r) {
     r->is_message_completed = true;
 }
 
-
-static int strcicmp(char const* a, char const* b) {
-    for (;; a++, b++) {
-        int d = tolower(*a) - tolower(*b);
-        if (d != 0 || !*a) {
-            return d;
+int http_response_find_header(http_response_t* r, const char* key) {
+    if (r->headers_count) {
+        for (uint16_t i = 0; i < r->headers_count; i++) {
+            if (strcicmp(r->header_fields[i], key) == 0) {
+                return (int)i;
+            }
         }
     }
-}
 
+    return -1;
+}

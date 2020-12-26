@@ -80,6 +80,14 @@ int http_response_set_header_field(http_response_t* r, const char* field, size_t
  */
 int http_response_set_header_value(http_response_t* r, const char* value, size_t value_len);
 
+
+/**
+ * @brief find header by key
+ * @return header's key, a non negative int on success and -1 if header is not found
+ */
+int http_response_find_header(http_response_t* r, const char* key);
+
+
 /**
  * @brief set response status code and message
  * @return 0 on success and < 0 on error

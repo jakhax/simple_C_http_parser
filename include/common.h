@@ -25,5 +25,8 @@ typedef enum boolean {
 } bool;
 #endif
 
+// https://stackoverflow.com/questions/5820810/case-insensitive-string-comp-in-c
+int strcicmp(char const* a, char const* b);
+
 
 #endif
