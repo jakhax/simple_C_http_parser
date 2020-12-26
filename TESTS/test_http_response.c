@@ -199,18 +199,19 @@ int test_set_headers_complete(void) {
 
 int test_set_header(void) {
     info("+++ test_set_header() +++");
-
+    int content_length = 65;
     char hf[3][100];
     char hv[3][100];
 
-    strncpy(hf[0], "Content-Type", strlen("Content-Type"));
-    strncpy(hv[0], "application/json", strlen("application/json"));
+    sprintf(hf[0], "%s", "Content-Type");
+    sprintf(hv[0], "%s", "application/json");
 
-    strncpy(hf[1], "Content-Length", strlen("Content-Length"));
-    strncpy(hv[1], "65", strlen("65"));
+    sprintf(hf[1], "%s", "Content-Length");
+    sprintf(hv[1], "%d", content_length);
 
-    strncpy(hf[2], "Content-Length", strlen("Content-Length"));
-    strncpy(hv[2], "65", strlen("65"));
+    sprintf(hf[2], "%s", "Transfer-Encoding");
+    sprintf(hv[2], "%s", "Chunked");
+
 
     http_response_t res;
     int ret = 0;
@@ -237,7 +238,7 @@ int test_set_header(void) {
     }
 
     http_response_set_headers_complete(&res);
-    int content_length = 0;
+
     sscanf(hv[2], "%d", &content_length);
     if (res.expected_content_length != content_length) {
         error("expected_content_length: got %d expected %d", res.expected_content_length, content_length);
