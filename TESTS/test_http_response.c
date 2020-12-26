@@ -250,6 +250,63 @@ int test_set_header(void) {
     return 0;
 }
 
+
+int test_find_header(void) {
+    info("+++ test_find_header() +++");
+    int content_length = 65;
+    char hf[3][100];
+    char hv[3][100];
+
+    sprintf(hf[0], "%s", "Content-Type");
+    sprintf(hv[0], "%s", "application/json");
+
+    sprintf(hf[1], "%s", "Content-Length");
+    sprintf(hv[1], "%d", content_length);
+
+    sprintf(hf[2], "%s", "Transfer-Encoding");
+    sprintf(hv[2], "%s", "Chunked");
+
+
+    http_response_t res;
+    int ret = 0;
+    if ((ret = http_response_init(&res)) != HTTPS_CLIENT_OK) {
+        error("http_response_init() %d", ret);
+        return ret;
+    }
+
+    for (int i = 0; i < 3; i++) {
+        http_response_set_header_field(&res, (const char*)hf[i], strlen(hf[i]));
+        http_response_set_header_value(&res, (const char*)hv[i], strlen(hv[i]));
+    }
+
+    int k = http_response_find_header(&res, "content-type");
+    if (k != 0){
+        error("find_header<content-type>: got %d expected %d", k, 0);
+        ret = -1;
+        goto exit;
+    }
+
+    k = http_response_find_header(&res, "Transfer-encoding");
+    if (k != 2){
+        error("find_header<transfer-encoding>: got %d expected %d", k, 2);
+        ret = -1;
+        goto exit;
+    }
+
+    k = http_response_find_header(&res, "Invalid-header");
+    if (k != -1){
+        error("find_header<Invalid-header>: got %d expected %d", k, -1);
+        ret = -1;
+        goto exit;
+    }
+
+exit:
+    http_response_free(&res);
+
+    return ret;
+}
+
+
 int test_set_header_chunked(void) {
     info("+++ test_set_header_chunked() +++");
 
@@ -391,7 +448,7 @@ int test_set_body_chunked(void) {
 
 int main() {
 
-    int tests_count = 11;
+    int tests_count = 12;
 
     int (*tests[tests_count])(void);
     tests[0] = test_set_status;
@@ -405,6 +462,7 @@ int main() {
     tests[8] = test_set_header_chunked;
     tests[9] = test_set_body;
     tests[10] = test_set_body_chunked;
+    tests[11] = test_find_header;
 
     return run_tests((const char*)TEST_NAME, tests, tests_count);
 }
