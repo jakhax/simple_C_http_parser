@@ -1,5 +1,14 @@
-# c_https_client
-A C http client using mbed tls 
+# Simple C HTTP Parser
+
+A simple wrapper of nginx [http_parser](https://github.com/nodejs/http-parser) that makes it very easy to build http requests and parse responses in C.
+
+## Features
+
+- [URL parser](./src/http_parse_url.c)
+- [Request builder](./src/request_builder.c)
+- [HTTP Response](./src/http_response.c)
+- [Response parser](./src/response_parser.c)
+
 
 ## Running Tests
 
@@ -7,13 +16,15 @@ A C http client using mbed tls
 make tests
 ```
 
-## Running Examples
+## Usage
+
+See [examples](./examples)
+
+## Building Examples
 
 ```bash
 make examples
 ```
-
-you can find the built binaries in [examples](./examples) folder.
 
 ## Todo
 

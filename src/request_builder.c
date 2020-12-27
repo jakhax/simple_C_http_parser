@@ -166,7 +166,7 @@ char* request_builder_build(request_builder_t* rb, const void* body, uint32_t bo
     req += body_size;
 
 #if DEBUG_REQUEST
-    printf("\r\n----- BEGIN REQUEST -----\r\n");
+    printf("\r\n+++++ BEGIN REQUEST +++++\r\n");
     printf("\r\n%s\r\n", originalReq);
     printf("----- END REQUEST -----\r\n\r\n");
 #endif

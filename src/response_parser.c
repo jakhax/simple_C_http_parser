@@ -3,7 +3,7 @@
 #include "http_response.h"
 #include "response_parser.h"
 
-#define DEBUG_CALLBACKS 1
+#define DEBUG_CALLBACKS 0
 
 #if DEBUG_CALLBACKS
 #define dbg_cb(x, ...) printf("[PARSER][CB] " x "\r\n", ##__VA_ARGS__)
