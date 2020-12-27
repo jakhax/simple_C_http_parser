@@ -27,7 +27,7 @@ make examples
 ```
 
 ## Todo
-
+- [-] libary with install entry in the Makefile
 - [-] Add error code and error messages to struct fields
 - [-] logging, with threading support
 - [-] support for very low memory devices
