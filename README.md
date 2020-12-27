@@ -1,6 +1,6 @@
 # Simple C HTTP Parser
 
-A simple wrapper of nginx [http_parser](https://github.com/nodejs/http-parser) that makes it very easy to build http requests and parse responses in C.
+A simple wrapper of [http_parser](https://github.com/nodejs/http-parser) that makes it very easy to build http requests and parse responses in C.
 
 ## Features
 
